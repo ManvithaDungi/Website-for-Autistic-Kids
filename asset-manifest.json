@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/ManvithaDungi/Website-for-Autistic-Kids/static/css/main.2a1b5c2b.css",
-    "main.js": "/ManvithaDungi/Website-for-Autistic-Kids/static/js/main.1578bae8.js",
+    "main.js": "/ManvithaDungi/Website-for-Autistic-Kids/static/js/main.22bffd4e.js",
     "static/js/453.341323f3.chunk.js": "/ManvithaDungi/Website-for-Autistic-Kids/static/js/453.341323f3.chunk.js",
     "static/media/profile.jpg": "/ManvithaDungi/Website-for-Autistic-Kids/static/media/profile.fa4a1ca2bf2863ccbe0a.jpg",
     "static/media/dog.jpg": "/ManvithaDungi/Website-for-Autistic-Kids/static/media/dog.2908633e438411548489.jpg",
@@ -19,11 +19,11 @@
     "static/media/knife.jpg": "/ManvithaDungi/Website-for-Autistic-Kids/static/media/knife.71051a84dd59f3a115a2.jpg",
     "index.html": "/ManvithaDungi/Website-for-Autistic-Kids/index.html",
     "main.2a1b5c2b.css.map": "/ManvithaDungi/Website-for-Autistic-Kids/static/css/main.2a1b5c2b.css.map",
-    "main.1578bae8.js.map": "/ManvithaDungi/Website-for-Autistic-Kids/static/js/main.1578bae8.js.map",
+    "main.22bffd4e.js.map": "/ManvithaDungi/Website-for-Autistic-Kids/static/js/main.22bffd4e.js.map",
     "453.341323f3.chunk.js.map": "/ManvithaDungi/Website-for-Autistic-Kids/static/js/453.341323f3.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.2a1b5c2b.css",
-    "static/js/main.1578bae8.js"
+    "static/js/main.22bffd4e.js"
   ]
 }
