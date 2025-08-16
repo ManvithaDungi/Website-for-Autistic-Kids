@@ -1,0 +1,99 @@
+/* src/pages/Game.css */
+
+.game-container {
+  padding: 2rem;
+  text-align: center;
+  background-color: var(--bg-main);
+  color: var(--text-dark);
+}
+
+.points {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  font-weight: bold;
+  color: var(--pistachio);
+}
+
+.feedback {
+  font-size: 1.2rem;
+  margin-top: 1rem;
+  animation: pop 0.4s ease-in-out;
+}
+
+.result {
+  margin-top: 2rem;
+  background-color: var(--bg-card);
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px var(--shadow-soft);
+}
+
+.restart-button {
+  margin-top: 1rem;
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  background-color: var(--clay);
+  color: white;
+  border: none;
+  border-radius: 0.6rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.restart-button:hover {
+  background-color: #b97852;
+}
+
+@keyframes pop {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.4;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+.next-btn {
+  margin-top: 1rem;
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  background-color: #DCA278;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.summary-screen {
+  text-align: center;
+  padding: 2rem;
+}
+.game-over {
+  text-align: center;
+  padding: 2rem;
+}
+
+.percentage {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin: 1rem 0;
+}
+
+.play-again-btn {
+  background: var(--pastel-mint);
+  color: #1E4620;
+  border: 3px solid #a6d8a6;
+  padding: 1rem 2rem;
+  border-radius: 20px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.play-again-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 5px 15px rgba(224, 255, 224, 0.8);
+}

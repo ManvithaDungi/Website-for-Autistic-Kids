@@ -1,0 +1,119 @@
+/* src/components/SafeOrUnsafe.css - Better Buttons */
+
+.safety-card {
+  background: var(--bg-card);
+  border-radius: 24px;
+  padding: clamp(20px, 5vw, 28px);
+  box-shadow: 0 4px 12px var(--shadow-soft);
+  text-align: center;
+  max-width: min(440px, 95vw);
+  margin: 0 auto;
+  border: 2px solid var(--pastel-lilac);
+  transition: all 0.4s ease;
+}
+
+.safety-image {
+  width: 100%;
+  max-width: 250px;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+  margin-bottom: 1.5rem;
+  border-radius: 16px;
+  background-color: var(--pastel-lemon);
+  padding: 1rem;
+  border: 2px solid #fadf9e; /* Darker lemon */
+  box-sizing: border-box;
+}
+
+.safety-question {
+  color: var(--text-dark);
+  margin-bottom: 1.5rem;
+  font-size: clamp(1.2rem, 3.2vw, 1.5rem);
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.safety-buttons {
+  display: flex;
+  gap: clamp(1rem, 4vw, 1.5rem); /* Increased gap */
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* --- Improved Button Styles --- */
+.btn {
+  /* Make buttons bigger and bolder */
+  padding: 1rem 1.5rem;
+  border-radius: 20px; /* More rounded */
+  font-size: clamp(1.1rem, 3vw, 1.3rem); /* Larger text */
+  font-weight: 600; /* Bolder text */
+  min-width: 160px; /* Wider buttons */
+  
+  /* Common styles */
+  border: 3px solid; /* Thicker border */
+  cursor: pointer;
+  font-family: 'Lexend', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem; /* Space between icon and text */
+  
+  /* Smooth transition for hover effects */
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
+}
+
+.btn-icon {
+  /* Style for the new SVG icons */
+  margin-bottom: -2px; /* Slight alignment adjustment */
+}
+
+/* Fun hover effect */
+.btn:hover:not(:disabled) {
+  transform: scale(1.08); /* Bounces up */
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.btn:active:not(:disabled) {
+  transform: scale(1.02); /* Slight press down effect */
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+  transform: scale(1) !important; /* Prevent hover effect when disabled */
+}
+
+/* Safe button uses mint green */
+.btn-safe {
+  background: var(--pastel-mint);
+  color: #1E4620; /* Darker green for readability */
+  border-color: #a6d8a6;
+  box-shadow: 0 5px 15px rgba(224, 255, 224, 0.8);
+}
+
+.btn-safe:hover:not(:disabled) {
+  background: #c8f7c8; /* Lighter mint */
+  box-shadow: 0 8px 20px rgba(224, 255, 224, 1);
+}
+
+/* Unsafe button uses pink */
+.btn-unsafe {
+  background: var(--pastel-pink);
+  color: #7A2E52;
+  border-color: #f7c5d8;
+  box-shadow: 0 5px 15px rgba(255, 225, 240, 0.8);
+}
+
+.btn-unsafe:hover:not(:disabled) {
+  background: var(--pastel-rose);
+  box-shadow: 0 8px 20px rgba(255, 214, 232, 1);
+}
+
+/* Mobile Optimizations */
+@media (max-width: 480px) {
+  .safety-buttons {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
