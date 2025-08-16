@@ -1,29 +1,29 @@
 {
   "files": {
-    "main.css": "/ManvithaDungi/Website-for-Autistic-Kids/static/css/main.2a1b5c2b.css",
-    "main.js": "/ManvithaDungi/Website-for-Autistic-Kids/static/js/main.22bffd4e.js",
-    "static/js/453.341323f3.chunk.js": "/ManvithaDungi/Website-for-Autistic-Kids/static/js/453.341323f3.chunk.js",
-    "static/media/profile.jpg": "/ManvithaDungi/Website-for-Autistic-Kids/static/media/profile.fa4a1ca2bf2863ccbe0a.jpg",
-    "static/media/dog.jpg": "/ManvithaDungi/Website-for-Autistic-Kids/static/media/dog.2908633e438411548489.jpg",
-    "static/media/matchstick.jpg": "/ManvithaDungi/Website-for-Autistic-Kids/static/media/matchstick.69ac975eb883d1489bdf.jpg",
-    "static/media/cleaning.jpg": "/ManvithaDungi/Website-for-Autistic-Kids/static/media/cleaning.b22e299361f52ac822a9.jpg",
-    "static/media/book.jpg": "/ManvithaDungi/Website-for-Autistic-Kids/static/media/book.ca5f3cd8e73a2622f14a.jpg",
-    "static/media/hero.jpg": "/ManvithaDungi/Website-for-Autistic-Kids/static/media/hero.ff75d6e1089ef64e5a4a.jpg",
-    "static/media/pills.jpg": "/ManvithaDungi/Website-for-Autistic-Kids/static/media/pills.14ae8f77b118269d2ed9.jpg",
-    "static/media/bicycle.jpg": "/ManvithaDungi/Website-for-Autistic-Kids/static/media/bicycle.e372273ffa43f86950ab.jpg",
-    "static/media/stove.jpg": "/ManvithaDungi/Website-for-Autistic-Kids/static/media/stove.ec57cafe28d5af56e775.jpg",
-    "static/media/teddyBear.jpg": "/ManvithaDungi/Website-for-Autistic-Kids/static/media/teddyBear.3f022aed48469d4f7cec.jpg",
-    "static/media/apple.jpg": "/ManvithaDungi/Website-for-Autistic-Kids/static/media/apple.8a7b5ef1183c1b14e028.jpg",
-    "static/media/scissors.jpg": "/ManvithaDungi/Website-for-Autistic-Kids/static/media/scissors.a0595f757a075c9aeef7.jpg",
-    "static/media/soccer.jpg": "/ManvithaDungi/Website-for-Autistic-Kids/static/media/soccer.ed583fc233800fafdd7b.jpg",
-    "static/media/knife.jpg": "/ManvithaDungi/Website-for-Autistic-Kids/static/media/knife.71051a84dd59f3a115a2.jpg",
-    "index.html": "/ManvithaDungi/Website-for-Autistic-Kids/index.html",
-    "main.2a1b5c2b.css.map": "/ManvithaDungi/Website-for-Autistic-Kids/static/css/main.2a1b5c2b.css.map",
-    "main.22bffd4e.js.map": "/ManvithaDungi/Website-for-Autistic-Kids/static/js/main.22bffd4e.js.map",
-    "453.341323f3.chunk.js.map": "/ManvithaDungi/Website-for-Autistic-Kids/static/js/453.341323f3.chunk.js.map"
+    "main.css": "/Website-for-Autistic-Kids/static/css/main.2a1b5c2b.css",
+    "main.js": "/Website-for-Autistic-Kids/static/js/main.e10de84d.js",
+    "static/js/453.341323f3.chunk.js": "/Website-for-Autistic-Kids/static/js/453.341323f3.chunk.js",
+    "static/media/profile.jpg": "/Website-for-Autistic-Kids/static/media/profile.fa4a1ca2bf2863ccbe0a.jpg",
+    "static/media/dog.jpg": "/Website-for-Autistic-Kids/static/media/dog.2908633e438411548489.jpg",
+    "static/media/matchstick.jpg": "/Website-for-Autistic-Kids/static/media/matchstick.69ac975eb883d1489bdf.jpg",
+    "static/media/cleaning.jpg": "/Website-for-Autistic-Kids/static/media/cleaning.b22e299361f52ac822a9.jpg",
+    "static/media/book.jpg": "/Website-for-Autistic-Kids/static/media/book.ca5f3cd8e73a2622f14a.jpg",
+    "static/media/hero.jpg": "/Website-for-Autistic-Kids/static/media/hero.ff75d6e1089ef64e5a4a.jpg",
+    "static/media/pills.jpg": "/Website-for-Autistic-Kids/static/media/pills.14ae8f77b118269d2ed9.jpg",
+    "static/media/bicycle.jpg": "/Website-for-Autistic-Kids/static/media/bicycle.e372273ffa43f86950ab.jpg",
+    "static/media/stove.jpg": "/Website-for-Autistic-Kids/static/media/stove.ec57cafe28d5af56e775.jpg",
+    "static/media/teddyBear.jpg": "/Website-for-Autistic-Kids/static/media/teddyBear.3f022aed48469d4f7cec.jpg",
+    "static/media/apple.jpg": "/Website-for-Autistic-Kids/static/media/apple.8a7b5ef1183c1b14e028.jpg",
+    "static/media/scissors.jpg": "/Website-for-Autistic-Kids/static/media/scissors.a0595f757a075c9aeef7.jpg",
+    "static/media/soccer.jpg": "/Website-for-Autistic-Kids/static/media/soccer.ed583fc233800fafdd7b.jpg",
+    "static/media/knife.jpg": "/Website-for-Autistic-Kids/static/media/knife.71051a84dd59f3a115a2.jpg",
+    "index.html": "/Website-for-Autistic-Kids/index.html",
+    "main.2a1b5c2b.css.map": "/Website-for-Autistic-Kids/static/css/main.2a1b5c2b.css.map",
+    "main.e10de84d.js.map": "/Website-for-Autistic-Kids/static/js/main.e10de84d.js.map",
+    "453.341323f3.chunk.js.map": "/Website-for-Autistic-Kids/static/js/453.341323f3.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.2a1b5c2b.css",
-    "static/js/main.22bffd4e.js"
+    "static/js/main.e10de84d.js"
   ]
 }
