@@ -13,7 +13,6 @@ import petNeutral from '../images/pet-neutral.jpg';
 
 // This component displays the pet companion based on the current mood and game state.
 class PetCompanion extends React.Component {
-  // The useless constructor has been removed. A default one is provided by JavaScript.
 
   // To consume context in a class component, we assign the context to a static contextType property.
   // This makes the context value available on `this.context`.
