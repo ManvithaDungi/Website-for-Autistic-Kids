@@ -1,15 +1,14 @@
 /* src/App.css - Kid-Friendly Pastel Theme */
 
 /* Color Palette */
+/* Used in multiple React components via CSS variables for consistent theming */
 :root {
-  --bg-main: #F0F8F8;
-  --bg-card: #FFFFFF;
-  --text-dark: #5D6073;
-  --text-light: #8E92A7;
-  --shadow-soft: rgba(93, 96, 115, 0.07);
-  --focus-color: #A9CCE3;
-
-  /* Pastel Palette */
+  --bg-main: #F0F8F8; /* layout & background color */
+  --bg-card: #FFFFFF; /* card components background */
+  --text-dark: #5D6073; /* text color for readability */
+  --text-light: #8E92A7; /* secondary text color */
+  --shadow-soft: rgba(93, 96, 115, 0.07); /* soft shadow for cards/buttons */
+  --focus-color: #A9CCE3; /* focus state for accessibility */
   --pastel-lavender: #E6E6FA;
   --pastel-mint: #E0FFE0;
   --pastel-pink: #FFE1F0;
@@ -22,57 +21,61 @@
 }
 
 /* Accessible, friendly font */
+/* Layout & Typography for multiple React components */
 @import url('https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600&display=swap');
 
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Lexend', sans-serif;
-  background-color: var(--bg-main);
-  color: var(--text-dark);
-  line-height: 1.6;
-  min-height: 100vh;
+  font-family: 'Lexend', sans-serif; /* typography concept */
+  background-color: var(--bg-main); /* layout */
+  color: var(--text-dark); /* text color for readability */
+  line-height: 1.6; /* accessibility */
+  min-height: 100vh; /* layout for full page */
 }
 
 .app-container {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  min-height: 100vh; /* layout container for App.js */
 }
 
 main {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: center; /* layout for children components */
 }
 
 /* Page Content Wrapper */
+/* Used in React components wrapping main content like Home.js, Game.js */
 .page-content {
-  padding: clamp(1.5rem, 4vw, 3rem);
+  padding: clamp(1.5rem, 4vw, 3rem); /* responsive layout */
   width: 100%;
-  max-width: 1200px;
+  max-width: 1200px; /* layout & responsive design */
   box-sizing: border-box;
 }
 
 /* Card Style */
+/* Reusable card component styles (Stateless Component concept) */
 .card {
-  background: var(--bg-card);
-  padding: clamp(1.5rem, 4vw, 2.5rem);
-  border-radius: 24px;
+  background: var(--bg-card); /* layout */
+  padding: clamp(1.5rem, 4vw, 2.5rem); /* spacing for child components */
+  border-radius: 24px; /* rounded corners for friendly UI */
   margin: 1.5rem auto;
   max-width: 95%;
-  box-shadow: 0 4px 15px var(--shadow-soft);
+  box-shadow: 0 4px 15px var(--shadow-soft); /* shadow for elevation */
   border: 2px solid var(--pastel-lavender);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* motion for better UX */
 }
 
 .card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-4px); /* interaction / event concept */
   box-shadow: 0 6px 20px rgba(93, 96, 115, 0.1);
 }
 
 /* Primary Button */
+/* Buttons used in multiple React components (Event Handling concept) */
 button.primary-button {
   background: linear-gradient(135deg, var(--pastel-sky), var(--pastel-pink));
   color: var(--text-dark);
@@ -82,32 +85,33 @@ button.primary-button {
   border-radius: 16px;
   font-size: 1.1rem;
   font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s ease;
+  cursor: pointer; /* interactive component */
+  transition: all 0.3s ease; /* hover effect */
   box-shadow: 0 4px 12px rgba(225, 240, 255, 0.8);
 }
 
 button.primary-button:hover {
-  transform: translateY(-2px);
+  transform: translateY(-2px); /* hover interaction */
   box-shadow: 0 6px 16px rgba(255, 225, 240, 0.9);
 }
 
 button:focus-visible {
-  outline: 3px solid var(--focus-color);
+  outline: 3px solid var(--focus-color); /* accessibility */
   outline-offset: 3px;
 }
 
 /* Game-specific styles */
+/* Used in Game.js component */
 .game-header,
 .game-over-screen {
   margin-bottom: 2rem;
-  text-align: center;
+  text-align: center; /* layout */
 }
 
 .score,
 .progress {
   font-size: 1.2rem;
-  color: var(--text-light);
+  color: var(--text-light); /* secondary text color */
   font-weight: 500;
 }
 
@@ -119,6 +123,7 @@ button:focus-visible {
 }
 
 /* Reduced Motion */
+/* Accessibility feature affecting all components using animation/transition */
 @media (prefers-reduced-motion: reduce) {
   .card,
   button {
@@ -132,9 +137,10 @@ button:focus-visible {
 }
 
 /* Mobile Optimizations */
+/* Responsive design applied to multiple components */
 @media (max-width: 768px) {
   .page-content {
-    padding: 1rem;
+    padding: 1rem; /* layout */
   }
   .card {
     margin: 1rem auto;

@@ -1,20 +1,15 @@
+// Hooks: useState, useEffect, and useContext are imported from React.
 import React, { useState, useEffect, useContext } from 'react';
-import SafeOrUnsafe from '../components/SafeOrUnsafe'; // Component imported, props will be passed
-import FeedbackBox from '../components/FeedbackBox';   // Component imported, props will be passed
-import items from '../data/safeItems';                 // Array of game items
-import { GameContext } from '../GameContext';         // React Context for global game state
-import "../pages/Game.css"                              // CSS import for styling
+// Creating Components using Props: SafeOrUnsafe is a custom component being used.
+import SafeOrUnsafe from '../components/SafeOrUnsafe';
+// Creating Components using Props: FeedbackBox is another custom component.
+import FeedbackBox from '../components/FeedbackBox';
+import items from '../data/safeItems';
+// State Management API: GameContext and PetContext are used to manage and share state.
+import { GameContext, PetContext } from "../GameContext";
+import "../pages/Game.css";
 
-// Import pet images
-import petHappyGif from '../images/pet-happy.gif';
-import petExcited from '../images/pet-excited.jpg';
-import petHappy from '../images/pet-happy.jpg';
-import petPeaceful from '../images/pet-peaceful.jpg';
-import petSad from '../images/pet-sad.jpg';
-import petShocked from '../images/pet-shocked.jpg';
-import petNeutral from '../images/pet-neutral.jpg';
-
-// Shuffle items function (utility function, not React-specific)
+// Shuffle items function
 const shuffleArray = (array) => {
   let shuffled = [...array];
   for (let i = shuffled.length - 1; i > 0; i--) {
@@ -25,99 +20,72 @@ const shuffleArray = (array) => {
 };
 
 function Game() {
-  // useContext: accessing global game state functions and variables
+  // Hooks / State Management API: useContext is used to consume shared state from Context.
   const { updateScore, feedback, giveFeedback } = useContext(GameContext);
+  const { setPetMood, setAllCorrect } = useContext(PetContext);
 
-  // useState: managing local component state
+  // State Management / State Management using Hooks: useState hook is used to manage component state.
   const [shuffledItems, setShuffledItems] = useState([]);
   const [currentItemIndex, setCurrentItemIndex] = useState(0);
   const [isGameFinished, setIsGameFinished] = useState(false);
   const [isAnswered, setIsAnswered] = useState(false);
-  const [petMood, setPetMood] = useState("neutral"); 
-  const [allCorrect, setAllCorrect] = useState(true);
 
-  // useEffect: shuffle items and preload images on first render
+  // Hooks / Component Lifecycle using Hooks: useEffect hook runs after the component mounts.
   useEffect(() => {
     setShuffledItems(shuffleArray(items));
-    items.forEach(item => new Image().src = item.image); // Preload item images
-  }, []); // Empty dependency array -> runs only once
+    // Preloading images for a smoother experience
+    items.forEach(item => new Image().src = item.image);
+  }, []); // Empty dependency array means this runs once, similar to componentDidMount.
 
-  // Event handler: called when user selects "Safe" or "Unsafe"
+  // Event Management: This function handles the logic when a user clicks an answer button.
   const handleAnswer = (userChoice) => {
-    if (isAnswered) return; // Prevent multiple answers
+    if (isAnswered) return;
 
     const currentItem = shuffledItems[currentItemIndex];
     const isCorrect = userChoice === currentItem.isSafe;
 
     if (isCorrect) {
-      updateScore(1); // Using context function to update score
-      setPetMood(currentItemIndex % 2 === 0 ? "excited" : "happy"); // Update pet mood
-      giveFeedback("You did it! 🎉 Your pet is happy!"); // ✅ Using context function to show feedback
+      updateScore(1);
+      setPetMood(currentItemIndex % 2 === 0 ? "excited" : "happy");
+      giveFeedback("You did it! 🎉 Your pet is happy!");
     } else {
       setPetMood("sad");
       giveFeedback("Oops! Your pet looks a little sad. 😔");
-      setAllCorrect(false); // Track if all answers were correct
+      setAllCorrect(false);
     }
 
-    setIsAnswered(true); // Prevent multiple answers
+    setIsAnswered(true);
 
-    // setTimeout: move to next question after 2.5 seconds
     setTimeout(() => {
       const nextItemIndex = currentItemIndex + 1;
       if (nextItemIndex < shuffledItems.length) {
-        setCurrentItemIndex(nextItemIndex); // Update state to next question
+        setCurrentItemIndex(nextItemIndex);
         setIsAnswered(false);
         setPetMood("neutral");
-        giveFeedback(""); // Clear feedback
+        giveFeedback("");
       } else {
-        setIsGameFinished(true); // Conditional rendering will show game over screen
+        setIsGameFinished(true);
       }
     }, 2500);
   };
 
-  // Event handler: reset game state for "Play Again"
+  // Event Management: This function handles the click event for the "Play Again" button.
   const handlePlayAgain = () => {
-    setShuffledItems(shuffleArray(items)); // Reset items
+    setShuffledItems(shuffleArray(items));
     setCurrentItemIndex(0);
     setIsGameFinished(false);
     setIsAnswered(false);
     setPetMood("neutral");
     setAllCorrect(true);
-    giveFeedback(""); // Clear feedback
+    giveFeedback("");
   };
 
-  // Helper function: returns appropriate pet image based on mood
-  const getPetImage = () => {
-    if (isGameFinished && allCorrect) return petHappyGif;
-    switch (petMood) {
-      case "excited": return petExcited;
-      case "happy": return petHappy;
-      case "peaceful": return petPeaceful;
-      case "sad": return petSad;
-      case "shocked": return petShocked;
-      default: return petNeutral;
-    }
-  };
-
-  // Helper function: returns appropriate pet status text
-  const getPetStatus = () => {
-    if (isGameFinished && allCorrect) return "Your pet is overjoyed! 🎉";
-    switch (petMood) {
-      case "excited": return "Your pet is excited! 😃";
-      case "happy": return "Your pet is smiling! 😊";
-      case "peaceful": return "Your pet feels calm. 🌿";
-      case "sad": return "Your pet looks a little down. 😔";
-      case "shocked": return "Your pet is surprised! 😲";
-      default: return "Your pet is waiting for you! 🐾";
-    }
-  };
-
-  // Conditional rendering: show loading if items are not ready
+  // Conditional Rendering: Displays a loading message until the items are shuffled and ready.
   if (shuffledItems.length === 0) return <div className="page-content">Loading game...</div>;
 
   return (
+    // Layout: The JSX structure defines the layout of the game page.
     <div className="game-container">
-      {/* Game header */}
       <div className="game-header">
         <h2>Is it Safe?</h2>
         <div className="progress">
@@ -125,35 +93,31 @@ function Game() {
         </div>
       </div>
 
-      {/* Pet icon: state-based rendering */}
-      <div className="pet-container">
-        <img src={getPetImage()} alt="Pet" className="pet-avatar" />
-        <p className="pet-status">{getPetStatus()}</p>
-      </div>
-
-      {/* SafeOrUnsafe component: passing props */}
-      <SafeOrUnsafe 
-        item={shuffledItems[currentItemIndex]}  //Props: current item
-        onAnswer={handleAnswer}                 //Props: event handler
-        isAnswered={isAnswered}                 //Props: disable button after answering
+      {/* Creating Components using Props / Props: The SafeOrUnsafe component is rendered with 'item', 'onAnswer', and 'isAnswered' props. */}
+      <SafeOrUnsafe
+        item={shuffledItems[currentItemIndex]}
+        onAnswer={handleAnswer}
+        isAnswered={isAnswered}
       />
 
-      {/* Conditional rendering: show game over screen */}
+      {/* Conditional Rendering: The game-over screen is only shown when 'isGameFinished' is true. */}
       {isGameFinished && (
         <div className="game-over-screen card">
           <h2>Great Job!</h2>
           <p>You've completed the game.</p>
+          {/* Event Management: The 'onClick' handler is attached to the button. */}
           <button className="play-again-btn" onClick={handlePlayAgain}>
             Play Again
           </button>
         </div>
       )}
 
-      {/* FeedbackBox component: passing props */}
+      {/* Conditional Rendering: The FeedbackBox component is only rendered if there is feedback text. */}
       {feedback && (
-        <FeedbackBox 
-          message={feedback} 
-          type={petMood === "happy" || petMood === "excited" ? "correct" : "incorrect"} 
+        // Creating Components using Props / Props: The FeedbackBox component is rendered with 'message' and 'type' props.
+        <FeedbackBox
+          message={feedback}
+          type={feedback.includes("happy") ? "correct" : "incorrect"}
         />
       )}
     </div>

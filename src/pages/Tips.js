@@ -1,171 +1,175 @@
-// File: src/pages/Tips.js
-import React, { useState } from 'react'; // React library and useState hook (State Management using Hooks)
-import Pagination from '@mui/material/Pagination'; // Material UI component (Pagination)
-import Stack from '@mui/material/Stack'; // Material UI layout component
-import './Tips.css'; // Custom CSS styling (Layout & Styling)
-
-// ---------------- Safety Tips Data ----------------
-// Arrays of objects = Static data (used as props in UI rendering) (Props, Lists, Keys)
-const safetyTips = [
-  { icon: '🚫', text: "Don't touch knives or sharp tools without a grown-up." },
-  { icon: '🔥', text: 'Stay away from hot stoves, ovens, and pans.' },
-  { icon: '🙋', text: 'If you are ever unsure, always ask an adult for help.' },
-  { icon: '🔌', text: "Don't play with electrical outlets or cords." },
-  { icon: '🚗', text: 'Always wear your seatbelt when you are in a car.' },
-  { icon: '💊', text: "Never take medicine unless a grown-up gives it to you." },
-  { icon: '🚲', text: "Always wear a helmet when riding a bike." },
-  { icon: '🏊', text: "Don’t swim without adult supervision." }
-];
-
-// ---------------- Learning Habits ----------------
-const learningHabits = [
-  { icon: '📅', text: 'Following a routine: Doing activities in the same order (ex: “First reading, then drawing”).' },
-  { icon: '✅', text: 'Task completion: Encouraging them to finish a small activity before moving to the next.' },
-  { icon: '🎯', text: 'Focus practice: Starting with short activities (2–5 minutes) and slowly increasing time.' },
-  { icon: '📊', text: 'Using visual schedules: Checking off “done” when a task is completed.' },
-  { icon: '🪑', text: 'Organizing learning space: Keeping pencils, books, and toys in the same place.' },
-  { icon: '🙋', text: 'Asking for help: Raising hand, showing a help card, or using words/signs when stuck.' },
-  { icon: '🏆', text: 'Self-monitoring: Teaching to say “I did it!” or marking their own progress.' }
-];
-
-// ---------------- Playtime Habits ----------------
-const playtimeHabits = [
-  { icon: '🔄', text: 'Taking turns: Board games, passing a ball, or turn-taking apps.' },
-  { icon: '🤝', text: 'Sharing toys: Practicing “my turn / your turn.”' },
-  { icon: '🎭', text: 'Pretend play: Acting out roles (shopkeeper, teacher, doctor) to build imagination.' },
-  { icon: '🎲', text: 'Rule-following games: Simple structured games like Simon Says, puzzles, or matching.' },
-  { icon: '🎨', text: 'Exploring creativity: Drawing, painting, music, LEGO, or block-building.' },
-  { icon: '⚽', text: 'Physical play: Running, climbing, jumping on a trampoline for motor skills.' },
-  { icon: '🧩', text: 'Independent play: Learning to play quietly with a puzzle, book, or sensory toy.' },
-  { icon: '👫', text: 'Interactive play: Engaging with peers in cooperative activities (building together, team games).' }
-];
-
-// ---------------- Special Habit Areas ----------------
-const specialHabits = [
-  { icon: '🌊', text: 'Sensory-friendly play: Sand, playdough, water beads, or fidget toys.' },
-  { icon: '🔢', text: 'Skill-based play: Matching shapes, counting blocks, memory card games.' },
-  { icon: '🎵', text: 'Calm-down play: Coloring, music, or listening to a story.' }
-];
+// Hooks: useState and useContext are imported from React.
+import React, { useState, useContext } from 'react';
+// Material UI: Pagination and Stack components are imported from the Material-UI library.
+import Pagination from '@mui/material/Pagination';
+import Stack from '@mui/material/Stack';
+// State Management API: GameContext and PetContext are used for sharing state across components.
+import { GameContext, PetContext } from '../GameContext';
+import { safetyTips, learningHabits, playtimeHabits, specialHabits } from '../data/SafetyTips';
+// Import the PetCompanion component to use it directly in this page
+import PetCompanion from '../components/PetCompanion';
+import './Tips.css';
 
 function Tips() {
-  const tipsPerPage = 3; // State-independent variable controlling items per page (Pagination logic)
+  const tipsPerPage = 3;
+  // Hooks / State Management API: useContext is used to access shared state and functions.
+  const { giveFeedback } = useContext(GameContext);
+  const { setPetMood } = useContext(PetContext);
+  // State Management / State Management using Hooks: useState is used for managing component-level state.
+  const [page, setPage] = useState(1);
+  const [completedTips, setCompletedTips] = useState(new Set());
+  const [activeCategory, setActiveCategory] = useState('safety');
 
-  // ---------------- React State (useState hook) ----------------
-  // Each section has its own state for current page number (State Management using Hooks, Controlled Component)
-  const [pageSafety, setPageSafety] = useState(1);
-  const [pageLearning, setPageLearning] = useState(1);
-  const [pagePlaytime, setPagePlaytime] = useState(1);
-  const [pageSpecial, setPageSpecial] = useState(1);
+  const categories = {
+    safety: { data: safetyTips, title: "Daily Safety Tips", subtitle: "Simple rules to stay safe every day", icon: "🛡️" },
+    learning: { data: learningHabits, title: "Learning Habits", subtitle: "Build smart study routines", icon: "🧠" },
+    playtime: { data: playtimeHabits, title: "Play & Exercise", subtitle: "Stay active and have fun", icon: "🏃‍♂️" },
+    special: { data: specialHabits, title: "Special Skills", subtitle: "Advanced safety and life skills", icon: "⭐" }
+  };
 
-  // ---------------- Helper function ----------------
-  // Pagination logic = slices the data array depending on current page (Reusable function, Stateless logic)
-  const paginate = (data, page) => {
-    const last = page * tipsPerPage;
+  const currentCategory = categories[activeCategory];
+  const currentData = currentCategory.data || [];
+
+  // Pagination: This function slices the data array to get the items for the current page.
+  const paginate = (data, currentPage) => {
+    const last = currentPage * tipsPerPage;
     const first = last - tipsPerPage;
-    return data.slice(first, last); // returns only the items to display
+    return data.slice(first, last);
+  };
+
+  // Event Management: This function handles the click event when a user marks a tip as complete.
+  const handleCompleteHabit = (habitText, index) => {
+    const tipId = `${activeCategory}-${index}`;
+    setCompletedTips(prev => new Set([...prev, tipId]));
+
+    // MODIFICATION: Select a random positive emotion for the pet
+    const positiveMoods = ["happy", "excited", "peaceful"];
+    const randomMood = positiveMoods[Math.floor(Math.random() * positiveMoods.length)];
+    setPetMood(randomMood);
+
+    giveFeedback(`Awesome! You completed "${habitText}". Your pet is so proud! 🐶✨`);
+  };
+
+  // Event Management: This function handles the click event for changing categories.
+  const handleCategoryChange = (category) => {
+    setActiveCategory(category);
+    setPage(1); // Reset to first page when changing categories
   };
 
   return (
-    <div>
-      {/* ---------------- Safety Tips Section ---------------- */}
-      <h2 style={{ marginBottom: '0.5rem' }}>Daily Safety Tips</h2>
-      <p className="section-subtitle">Simple rules to stay safe every day</p>
+    // Layout: The JSX defines the structure and layout of the Tips component.
+    <div className="tips-container">
+      {/* Header Section */}
+      <div className="tips-header">
+        <div className="header-content">
+          <div className="category-icon">{currentCategory.icon}</div>
+          <h2 className="main-title">{currentCategory.title}</h2>
+          <p className="section-subtitle">{currentCategory.subtitle}</p>
+        </div>
+      </div>
 
-      {/* Mapping through array = list rendering in React (Lists, Keys, Stateless Component) */}
-      <div className="tips-grid">
-        {paginate(safetyTips, pageSafety).map((tip, i) => (
-          <div key={i} className="tip-card">
-            {/* props used here: tip.icon & tip.text */}
-            <div className="tip-icon" aria-label="Safety icon">{tip.icon}</div>
-            <p className="tip-text">{tip.text}</p>
-          </div>
+      {/* Pet Companion is now rendered here, below the header */}
+      <PetCompanion />
+
+      {/* Category Navigation */}
+      <div className="category-nav">
+        {/* Lists / Keys: The .map() function iterates over an array to render a list of buttons. The 'key' prop is essential for React's rendering performance. */}
+        {Object.entries(categories).map(([key, category]) => (
+          <button
+            key={key}
+            className={`category-btn ${activeCategory === key ? 'active' : ''}`}
+            // Event Management: The onClick handler is attached to each category button.
+            onClick={() => handleCategoryChange(key)}
+            aria-pressed={activeCategory === key}
+          >
+            <span className="category-btn-icon">{category.icon}</span>
+            <span className="category-btn-text">{category.title.split(' ')[0]}</span>
+          </button>
         ))}
       </div>
 
-      {/* Controlled Component: Pagination (Material UI, Event Management, State Management) */}
-      <Stack spacing={2} alignItems="center" sx={{ marginTop: '2rem' }}>
-        <Pagination
-          count={Math.ceil(safetyTips.length / tipsPerPage)} // total pages
-          page={pageSafety} // controlled state value
-          onChange={(e, val) => setPageSafety(val)} // event handler updating state
-          shape="rounded"
-        />
-      </Stack>
-
-      {/* ---------------- Learning Habits Section ---------------- */}
-      <h2 style={{ margin: '3rem 0 0.5rem' }}>Learning Habits</h2>
-      <p className="section-subtitle">Helpful routines for learning and focus</p>
-      <div className="tips-grid">
-        {paginate(learningHabits, pageLearning).map((tip, i) => (
-          <div key={i} className="tip-card">
-            <div className="tip-icon" aria-label="Learning icon">{tip.icon}</div>
-            <p className="tip-text">{tip.text}</p>
-          </div>
-        ))}
+      {/* Progress Indicator */}
+      <div className="progress-section">
+        <div className="progress-bar">
+          <div
+            className="progress-fill"
+            style={{
+              width: `${(completedTips.size / Object.values(categories).reduce((sum, cat) => sum + (cat.data?.length || 0), 0)) * 100}%`
+            }}
+          />
+        </div>
+        <span className="progress-text">
+          {completedTips.size} completed • Keep going! 🌟
+        </span>
       </div>
-      <Stack spacing={2} alignItems="center" sx={{ marginTop: '2rem' }}>
-        <Pagination
-          count={Math.ceil(learningHabits.length / tipsPerPage)}
-          page={pageLearning}
-          onChange={(e, val) => setPageLearning(val)}
-          shape="rounded"
-        />
-      </Stack>
 
-      {/* ---------------- Playtime Habits Section ---------------- */}
-      <h2 style={{ margin: '3rem 0 0.5rem' }}>Playtime Habits</h2>
-      <p className="section-subtitle">Ways to play, share, and enjoy together</p>
+      {/* Tips Grid */}
       <div className="tips-grid">
-        {paginate(playtimeHabits, pagePlaytime).map((tip, i) => (
-          <div key={i} className="tip-card">
-            <div className="tip-icon" aria-label="Playtime icon">{tip.icon}</div>
-            <p className="tip-text">{tip.text}</p>
-          </div>
-        ))}
-      </div>
-      <Stack spacing={2} alignItems="center" sx={{ marginTop: '2rem' }}>
-        <Pagination
-          count={Math.ceil(playtimeHabits.length / tipsPerPage)}
-          page={pagePlaytime}
-          onChange={(e, val) => setPagePlaytime(val)}
-          shape="rounded"
-        />
-      </Stack>
+        {/* Lists / Keys: The .map() function is used to render a list of tip cards. 'key' is used for each card. */}
+        {paginate(currentData, page).map((tip, i) => {
+          const tipIndex = i + ((page - 1) * tipsPerPage);
+          const tipId = `${activeCategory}-${tipIndex}`;
+          const isCompleted = completedTips.has(tipId);
 
-      {/* ---------------- Special Habit Areas Section ---------------- */}
-      <h2 style={{ margin: '3rem 0 0.5rem' }}>Special Habit Areas</h2>
-      <p className="section-subtitle">Extra activities to calm and build skills</p>
-      <div className="tips-grid">
-        {paginate(specialHabits, pageSpecial).map((tip, i) => (
-          <div key={i} className="tip-card">
-            <div className="tip-icon" aria-label="Special habit icon">{tip.icon}</div>
-            <p className="tip-text">{tip.text}</p>
-          </div>
-        ))}
+          return (
+            // Keys: The 'key' prop helps React identify which items have changed, are added, or are removed.
+            <div key={tipIndex} className={`tip-card ${isCompleted ? 'completed' : ''}`}>
+              <div className="tip-icon">{tip.icon}</div>
+              <div className="tip-content">
+                <p className="tip-text">{tip.text}</p>
+                {/* Conditional Rendering: The tip description is only rendered if it exists. */}
+                {tip.description && (
+                  <p className="tip-description">{tip.description}</p>
+                )}
+              </div>
+              <button
+                className={`done-btn ${isCompleted ? 'completed' : ''}`}
+                // Event Management: An onClick handler is attached to the completion button.
+                onClick={() => handleCompleteHabit(tip.text, tipIndex)}
+                disabled={isCompleted}
+                aria-label={isCompleted ? 'Completed' : 'Mark as completed'}
+              >
+                {/* Conditional Rendering: The button's content changes based on whether the tip is completed. */}
+                {isCompleted ? (
+                  <>
+                    <span className="btn-icon">🎉</span>
+                    <span>Completed!</span>
+                  </>
+                ) : (
+                  <>
+                    <span className="btn-icon">✅</span>
+                    <span>I Did This!</span>
+                  </>
+                )}
+              </button>
+            </div>
+          );
+        })}
       </div>
-      <Stack spacing={2} alignItems="center" sx={{ marginTop: '2rem' }}>
-        <Pagination
-          count={Math.ceil(specialHabits.length / tipsPerPage)}
-          page={pageSpecial}
-          onChange={(e, val) => setPageSpecial(val)}
-          shape="rounded"
-        />
-      </Stack>
+
+      {/* Enhanced Pagination */}
+      <div className="pagination-section">
+        {/* Material UI: The Stack component from MUI is used for layout. */}
+        <Stack spacing={2} alignItems="center">
+          {/* Material UI / Pagination: The Pagination component from MUI is used to handle page navigation. */}
+          <Pagination
+            count={Math.ceil(currentData.length / tipsPerPage)}
+            page={page}
+            onChange={(e, val) => setPage(val)}
+            shape="rounded"
+            color="primary"
+            size="large"
+            showFirstButton
+            showLastButton
+          />
+          <div className="pagination-info">
+            Page {page} of {Math.ceil(currentData.length / tipsPerPage)} •
+            {currentData.length} total tips
+          </div>
+        </Stack>
+      </div>
     </div>
   );
 }
 
-export default Tips; // default export for routing
-
-// ---------------- Concepts Used ----------------
-// Props: tip.icon, tip.text
-// Lists: Mapping arrays to JSX
-// Keys: Each tip card has a key
-// State Management: useState for page numbers
-// Event Management: onChange for Pagination
-// Controlled Components: Pagination controlled by state
-// Hooks: useState
-// Layout: Stack from Material UI, CSS grid
-// Conditional Rendering: Not needed here but could be used
-// Material UI: Pagination, Stack
-// Stateless Component: Each mapped tip card
+export default Tips;

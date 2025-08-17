@@ -1,129 +1,245 @@
 // src/pages/Home.js
-import React from 'react';
-import { Link } from 'react-router-dom'; // Routing used here
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import './Home.css';
 
 import heroImage from '../images/hero.jpg';
 import profileImage from '../images/profile.jpg';
 
 function Home() {
-  // Only concepts actually used
+  const [visibleConcepts, setVisibleConcepts] = useState(3);
+  const [activeTab, setActiveTab] = useState('articles');
+
+  // Scroll animation state
+  const [scrollY, setScrollY] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => setScrollY(window.scrollY);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   const reactConcepts = [
-    { title: "Props", description: "Passed props to components like SafeOrUnsafe and FeedbackBox." }, // props concept
-    { title: "Creating Components with Props", description: "Functional components accept props to display dynamic content." }, // functional component with props
-    { title: "Props Validation", description: "PropTypes used in SafeOrUnsafe.js and FeedbackBox.js." }, // prop validation
-    { title: "Event Management", description: "Click events handled with functions like handleAnswer in Game.js." }, // event management
-    { title: "State Management", description: "useState manages game state, current question index, and score." }, // state management
-    { title: "Context API", description: "GameContext shares score, feedback, and selectedItems across components." }, // context API
-    { title: "Stateless Components", description: "Navbar.js and Tips.js are purely presentational." }, // stateless components
-    { title: "Hooks", description: "useState, useEffect, useContext used across the project." }, // hooks
-    { title: "Conditional Rendering", description: "Different UI shown depending on game state (loading, in-progress, or finished)." }, // conditional rendering
-    { title: "Lists & Keys", description: ".map() used for items in SafeOrUnsafe and Tips, with keys for performance." }, // lists & keys
-    { title: "Routing", description: "react-router-dom used for navigating between pages." }, // routing
-    { title: "Forms", description: "FeedbackBox has a controlled form input." }, // form programming
-    { title: "Pagination", description: "Tips.js uses MUI Pagination for showing tips." } // pagination
+    { title: "Props", description: "Passed props to components like SafeOrUnsafe and FeedbackBox.", icon: "📦", level: "Beginner" },
+    { title: "Creating Components with Props", description: "Functional components accept props to display dynamic content.", icon: "🧩", level: "Beginner" },
+    { title: "Props Validation", description: "PropTypes used in SafeOrUnsafe.js and FeedbackBox.js.", icon: "✅", level: "Intermediate" },
+    { title: "Event Management", description: "Click events handled with functions like handleAnswer in Game.js.", icon: "🎯", level: "Beginner" },
+    { title: "State Management", description: "useState manages game state, current question index, and score.", icon: "🔄", level: "Intermediate" },
+    { title: "Context API", description: "GameContext shares score, feedback, and selectedItems across components.", icon: "🌐", level: "Advanced" },
+    { title: "Stateless Components", description: "Navbar.js and Tips.js are purely presentational.", icon: "🎨", level: "Beginner" },
+    { title: "Hooks", description: "useState, useEffect, useContext used across the project.", icon: "🪝", level: "Intermediate" },
+    { title: "Conditional Rendering", description: "Different UI shown depending on game state (loading, in-progress, or finished).", icon: "🔀", level: "Intermediate" },
+    { title: "Lists & Keys", description: ".map() used for items in SafeOrUnsafe and Tips, with keys for performance.", icon: "📋", level: "Beginner" },
+    { title: "Routing", description: "react-router-dom used for navigating between pages.", icon: "🛤️", level: "Intermediate" },
+    { title: "Forms", description: "FeedbackBox has a controlled form input.", icon: "📝", level: "Beginner" },
+    { title: "Pagination", description: "Tips.js uses MUI Pagination for showing tips.", icon: "📄", level: "Advanced" }
   ];
 
-  // References list
   const references = {
     articles: [
-      { title: "Web Design for Autism", url: "https://www.unimelb.edu.au/accessibility/web-design-for-autism" },
-      { title: "Best Autism Websites", url: "https://webflow.com/made-in-webflow/autism" },
-      { title: "Create an Accessible Website — Autism Friendly", url: "https://medium.com/@oksana.iudenkova/create-an-accessible-website-make-it-autism-friendly-db6821c72ed3" }
+      { title: "Web Design for Autism", url: "https://www.unimelb.edu.au/accessibility/web-design-for-autism", description: "Comprehensive guide on creating autism-friendly web interfaces" },
+      { title: "Best Autism Websites", url: "https://webflow.com/made-in-webflow/autism", description: "Showcasing excellent examples of accessible autism websites" },
+      { title: "Create an Accessible Website — Autism Friendly", url: "https://medium.com/@oksana.iudenkova/create-an-accessible-website-make-it-autism-friendly-db6821c72ed3", description: "Step-by-step approach to building autism-inclusive designs" }
     ],
     videos: [
-      { title: "Designing for Web Accessibility", url: "https://youtu.be/ou8kT9G5ZN4?si=OA4A5UOG0ATBHI8m" },
-      { title: "Autism & Neurodiversity Inclusive Design", url: "https://youtu.be/zf-1AeoaiqI?si=LdUoE4QOo_pPbfFV" },
-      { title: "How to Design for Autism", url: "https://youtu.be/_F_8s02KuT8?si=YQZakQsVbmdKrYlQ" },
-      { title: "Designing Built Environments for Children with Autism", url: "https://youtu.be/K0GiTeQF8T0?si=61VGwjmdr_7-j7ze" },
-      { title: "Designing for Neurodiversity", url: "https://youtu.be/3aH--S3r9n4?si=ehZSmQ2WN5PgdeHS" }
+      { title: "Designing for Web Accessibility", url: "https://youtu.be/ou8kT9G5ZN4?si=OA4A5UOG0ATBHI8m", description: "Essential principles for accessible web design" },
+      { title: "Autism & Neurodiversity Inclusive Design", url: "https://youtu.be/zf-1AeoaiqI?si=LdUoE4QOo_pPbfFV", description: "Understanding neurodiversity in design processes" },
+      { title: "How to Design for Autism", url: "https://youtu.be/_F_8s02KuT8?si=YQZakQsVbmdKrYlQ", description: "Practical tips for autism-centered design" },
+      { title: "Designing Built Environments for Children with Autism", url: "https://youtu.be/K0GiTeQF8T0?si=61VGwjmdr_7-j7ze", description: "Creating supportive physical and digital spaces" },
+      { title: "Designing for Neurodiversity", url: "https://youtu.be/3aH--S3r9n4?si=ehZSmQ2WN5PgdeHS", description: "Broad perspective on inclusive design practices" }
     ]
+  };
+
+  /**
+   * Returns a pastel color based on the concept difficulty level.
+   * These colors are soft and provide good contrast with white text.
+   */
+  const getLevelColor = (level) => {
+    switch(level) {
+      case 'Beginner': return '#77DD77'; // Pastel Green
+      case 'Intermediate': return '#FFB347'; // Pastel Orange
+      case 'Advanced': return '#FF6961'; // Pastel Red
+      default: return '#AEC6CF'; // Pastel Blue
+    }
+  };
+
+  const showMoreConcepts = () => {
+    setVisibleConcepts(prev => Math.min(prev + 3, reactConcepts.length));
   };
 
   return (
     <div className="home-container">
-      {/* Hero & Profile Section */}
-      <section className="hero-profile-section">
-        {/* Left Card */}
-        <div className="info-card">
-          <img src={heroImage} alt="Cartoon safety hero" className="card-image" /> {/* layout concept */}
-          <h2 className="card-title">Become a Safety Hero!</h2>
-          <p className="card-text">Learn all about staying safe in this fun adventure game.</p>
-          <Link to="/game"> {/* routing used here */}
-            <button className="card-button">Start the Game</button> {/* event handling */}
-          </Link>
+      {/* Animated Background */}
+      <div className="animated-bg">
+        <div className="floating-shapes">
+          <div className="shape shape-1" style={{ transform: `translateY(${scrollY * 0.1}px)` }}></div>
+          <div className="shape shape-2" style={{ transform: `translateY(${scrollY * 0.15}px)` }}></div>
+          <div className="shape shape-3" style={{ transform: `translateY(${scrollY * 0.08}px)` }}></div>
         </div>
+      </div>
 
-        {/* Right Card */}
-        <div className="info-card">
-          <img 
-            src={profileImage}
-            alt="Manvitha Dungi"
-            className="card-image"
-            onError={(e) => { // event management
-              e.target.src = 'https://placehold.co/150x150/F0E6FF/5D6073?text=You';
-            }}
-          />
-          <h3 className="card-title">Manvitha Dungi</h3>
-          <p className="card-text">
-            Hi, I'm Manvitha, a passionate developer creating fun and accessible web experiences.
-          </p>
+      {/* Hero Section */}
+      <section className="hero-section">
+        <div className="hero-content">
+          <div className="hero-text">
+            <h1 className="hero-title">
+              <span className="title-gradient">Safe or Unsafe</span>
+              <span className="title-subtitle">Interactive Learning Adventure</span>
+            </h1>
+            <p className="hero-description">
+              Empowering children with autism to learn safety concepts through engaging, 
+              accessible, and fun interactive experiences.
+            </p>
+            <Link to="/game" className="cta-button">
+              <span className="cta-icon">🚀</span>
+              Start Your Adventure
+              <span className="cta-arrow">→</span>
+            </Link>
+          </div>
+          <div className="hero-visual">
+            <div className="hero-image-container">
+              <img src={heroImage} alt="Safety Hero Character" className="hero-image" />
+              <div className="hero-decorations">
+                <div className="decoration decoration-1">⭐</div>
+                <div className="decoration decoration-2">🛡️</div>
+                <div className="decoration decoration-3">🎯</div>
+                <div className="decoration decoration-4">✨</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Profile Section */}
+      <section className="profile-section">
+        <div className="profile-card">
+          <div className="profile-info">
+            <img 
+              src={profileImage}
+              alt="Manvitha Dungi - Developer"
+              className="profile-image"
+              onError={(e) => {
+                e.target.src = 'https://placehold.co/150x150/F0E6FF/5D6073?text=MD';
+              }}
+            />
+            <div className="profile-details">
+              <h3 className="profile-name">Manvitha Dungi</h3>
+              <p className="profile-title">Full-Stack Developer</p>
+              <p className="profile-description">
+                Passionate about creating inclusive digital experiences that make technology 
+                accessible and enjoyable for everyone, especially children with special needs.
+              </p>
+              <div className="profile-skills">
+                <span className="skill-tag">React</span>
+                <span className="skill-tag">Accessibility</span>
+                <span className="skill-tag">UX Design</span>
+                <span className="skill-tag">Inclusive Design</span>
+              </div>
+            </div>
+          </div>
           <a 
             href="https://manvithadungi.github.io/MyPortfolio/"
             target="_blank"
             rel="noopener noreferrer"
-            className="card-button"
+            className="profile-button"
           >
-            View My Portfolio
+            <span>View Portfolio</span>
+            <span className="button-icon">🌟</span>
           </a>
         </div>
       </section>
 
-      {/* Use Case */}
-      <section className="description-card">
-        <h2 className="card-title">Use Case</h2>
-        <p className="card-text">
-          <strong>"Safe or Unsafe"</strong> is an interactive website designed to help children with autism
-          learn to identify safe and unsafe situations in a calm, supportive way.
-        </p>
-      </section>
-
-      {/* React Concepts */}
+      {/* React Concepts Section */}
       <section className="concepts-section">
-        <h2 className="section-heading">React Concepts Used</h2>
-        <div className="concepts-container">
-          {reactConcepts.map((concept, index) => (
-            <div key={index} className="concept-card"> {/* Lists & Keys used here */}
-              <div className="concept-title">{concept.title}</div>
-              <div className="concept-description">{concept.description}</div>
+        <div className="concepts-header">
+          <h2 className="section-title">
+            <span className="title-icon">⚛️</span>
+            React Concepts Implemented
+          </h2>
+          <p className="section-subtitle">
+            Exploring modern React patterns and best practices through practical implementation
+          </p>
+        </div>
+        <div className="concepts-grid">
+          {reactConcepts.slice(0, visibleConcepts).map((concept, index) => (
+            <div key={index} className="concept-card" style={{ animationDelay: `${index * 0.1}s` }}>
+              <div className="concept-header">
+                <span className="concept-icon">{concept.icon}</span>
+                <div className="concept-meta">
+                  <h3 className="concept-title">{concept.title}</h3>
+                  <span 
+                    className="concept-level" 
+                    style={{ backgroundColor: getLevelColor(concept.level) }}
+                  >
+                    {concept.level}
+                  </span>
+                </div>
+              </div>
+              <p className="concept-description">{concept.description}</p>
             </div>
           ))}
         </div>
+        {visibleConcepts < reactConcepts.length && (
+          <div className="load-more-container">
+            <button className="load-more-button" onClick={showMoreConcepts}>
+              <span>Show More Concepts</span>
+              <span className="load-more-icon">↓</span>
+            </button>
+          </div>
+        )}
       </section>
 
       {/* References Section */}
       <section className="references-section">
-        <h2 className="section-heading">References</h2>
-        <div className="references-container">
-          <div className="reference-card">
-            <h3>Articles</h3>
-            <ul>
-              {references.articles.map((ref, index) => ( // Lists & Keys
-                <li key={index}>
-                  <a href={ref.url} target="_blank" rel="noopener noreferrer">{ref.title}</a>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div className="reference-card">
-            <h3>Videos</h3>
-            <ul>
-              {references.videos.map((ref, index) => ( // Lists & Keys
-                <li key={index}>
-                  <a href={ref.url} target="_blank" rel="noopener noreferrer">{ref.title}</a>
-                </li>
-              ))}
-            </ul>
+        <div className="references-header">
+          <h2 className="section-title">
+            <span className="title-icon">📚</span>
+            Learning Resources
+          </h2>
+          <p className="section-subtitle">
+            Curated resources about autism-friendly design and accessibility
+          </p>
+        </div>
+        
+        <div className="references-tabs">
+          <button 
+            className={`tab-button ${activeTab === 'articles' ? 'active' : ''}`}
+            onClick={() => setActiveTab('articles')}
+          >
+            <span className="tab-icon">📄</span>
+            Articles ({references.articles.length})
+          </button>
+          <button 
+            className={`tab-button ${activeTab === 'videos' ? 'active' : ''}`}
+            onClick={() => setActiveTab('videos')}
+          >
+            <span className="tab-icon">🎥</span>
+            Videos ({references.videos.length})
+          </button>
+        </div>
+
+        <div className="references-content">
+          <div className="references-grid">
+            {references[activeTab].map((ref, index) => (
+              <div key={index} className="reference-card">
+                <div className="reference-header">
+                  <span className="reference-icon">
+                    {activeTab === 'articles' ? '📖' : '🎬'}
+                  </span>
+                  <h3 className="reference-title">{ref.title}</h3>
+                </div>
+                <p className="reference-description">{ref.description}</p>
+                <a 
+                  href={ref.url} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="reference-link"
+                >
+                  <span>Explore Resource</span>
+                  <span className="link-arrow">↗</span>
+                </a>
+              </div>
+            ))}
           </div>
         </div>
       </section>
