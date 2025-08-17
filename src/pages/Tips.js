@@ -1,11 +1,11 @@
 // File: src/pages/Tips.js
-import React, { useState } from 'react'; // React library and useState hook
-import Pagination from '@mui/material/Pagination'; // External component (MUI)
-import Stack from '@mui/material/Stack';
-import './Tips.css'; // Custom CSS styling
+import React, { useState } from 'react'; // React library and useState hook (State Management using Hooks)
+import Pagination from '@mui/material/Pagination'; // Material UI component (Pagination)
+import Stack from '@mui/material/Stack'; // Material UI layout component
+import './Tips.css'; // Custom CSS styling (Layout & Styling)
 
 // ---------------- Safety Tips Data ----------------
-// Arrays of objects = Static data (used as props in UI rendering)
+// Arrays of objects = Static data (used as props in UI rendering) (Props, Lists, Keys)
 const safetyTips = [
   { icon: '🚫', text: "Don't touch knives or sharp tools without a grown-up." },
   { icon: '🔥', text: 'Stay away from hot stoves, ovens, and pans.' },
@@ -48,17 +48,17 @@ const specialHabits = [
 ];
 
 function Tips() {
-  const tipsPerPage = 3; // Variable to control number of items per page
+  const tipsPerPage = 3; // State-independent variable controlling items per page (Pagination logic)
 
   // ---------------- React State (useState hook) ----------------
-  // Each section has its own state for current page number
+  // Each section has its own state for current page number (State Management using Hooks, Controlled Component)
   const [pageSafety, setPageSafety] = useState(1);
   const [pageLearning, setPageLearning] = useState(1);
   const [pagePlaytime, setPagePlaytime] = useState(1);
   const [pageSpecial, setPageSpecial] = useState(1);
 
   // ---------------- Helper function ----------------
-  // Pagination logic = slices the data array depending on current page
+  // Pagination logic = slices the data array depending on current page (Reusable function, Stateless logic)
   const paginate = (data, page) => {
     const last = page * tipsPerPage;
     const first = last - tipsPerPage;
@@ -71,7 +71,7 @@ function Tips() {
       <h2 style={{ marginBottom: '0.5rem' }}>Daily Safety Tips</h2>
       <p className="section-subtitle">Simple rules to stay safe every day</p>
 
-      {/* Mapping through array = list rendering in React */}
+      {/* Mapping through array = list rendering in React (Lists, Keys, Stateless Component) */}
       <div className="tips-grid">
         {paginate(safetyTips, pageSafety).map((tip, i) => (
           <div key={i} className="tip-card">
@@ -82,7 +82,7 @@ function Tips() {
         ))}
       </div>
 
-      {/* Controlled Component: Pagination (external UI lib) */}
+      {/* Controlled Component: Pagination (Material UI, Event Management, State Management) */}
       <Stack spacing={2} alignItems="center" sx={{ marginTop: '2rem' }}>
         <Pagination
           count={Math.ceil(safetyTips.length / tipsPerPage)} // total pages
@@ -155,4 +155,17 @@ function Tips() {
   );
 }
 
-export default Tips; // default export for use in routing
+export default Tips; // default export for routing
+
+// ---------------- Concepts Used ----------------
+// Props: tip.icon, tip.text
+// Lists: Mapping arrays to JSX
+// Keys: Each tip card has a key
+// State Management: useState for page numbers
+// Event Management: onChange for Pagination
+// Controlled Components: Pagination controlled by state
+// Hooks: useState
+// Layout: Stack from Material UI, CSS grid
+// Conditional Rendering: Not needed here but could be used
+// Material UI: Pagination, Stack
+// Stateless Component: Each mapped tip card

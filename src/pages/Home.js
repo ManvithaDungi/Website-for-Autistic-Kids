@@ -1,6 +1,6 @@
 // src/pages/Home.js
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom'; // Routing used here
 import './Home.css';
 
 import heroImage from '../images/hero.jpg';
@@ -9,19 +9,19 @@ import profileImage from '../images/profile.jpg';
 function Home() {
   // Only concepts actually used
   const reactConcepts = [
-    { title: "Props", description: "Passed props to components like SafeOrUnsafe and FeedbackBox." },
-    { title: "Creating Components with Props", description: "Functional components accept props to display dynamic content." },
-    { title: "Props Validation", description: "PropTypes used in SafeOrUnsafe.js and FeedbackBox.js." },
-    { title: "Event Management", description: "Click events handled with functions like handleAnswer in Game.js." },
-    { title: "State Management", description: "useState manages game state, current question index, and score." },
-    { title: "Context API", description: "GameContext shares score, feedback, and selectedItems across components." },
-    { title: "Stateless Components", description: "Navbar.js and Tips.js are purely presentational." },
-    { title: "Hooks", description: "useState, useEffect, useContext used across the project." },
-    { title: "Conditional Rendering", description: "Different UI shown depending on game state (loading, in-progress, or finished)." },
-    { title: "Lists & Keys", description: ".map() used for items in SafeOrUnsafe and Tips, with keys for performance." },
-    { title: "Routing", description: "react-router-dom used for navigating between pages." },
-    { title: "Forms", description: "FeedbackBox has a controlled form input." },
-    { title: "Pagination", description: "Tips.js uses MUI Pagination for showing tips." }
+    { title: "Props", description: "Passed props to components like SafeOrUnsafe and FeedbackBox." }, // props concept
+    { title: "Creating Components with Props", description: "Functional components accept props to display dynamic content." }, // functional component with props
+    { title: "Props Validation", description: "PropTypes used in SafeOrUnsafe.js and FeedbackBox.js." }, // prop validation
+    { title: "Event Management", description: "Click events handled with functions like handleAnswer in Game.js." }, // event management
+    { title: "State Management", description: "useState manages game state, current question index, and score." }, // state management
+    { title: "Context API", description: "GameContext shares score, feedback, and selectedItems across components." }, // context API
+    { title: "Stateless Components", description: "Navbar.js and Tips.js are purely presentational." }, // stateless components
+    { title: "Hooks", description: "useState, useEffect, useContext used across the project." }, // hooks
+    { title: "Conditional Rendering", description: "Different UI shown depending on game state (loading, in-progress, or finished)." }, // conditional rendering
+    { title: "Lists & Keys", description: ".map() used for items in SafeOrUnsafe and Tips, with keys for performance." }, // lists & keys
+    { title: "Routing", description: "react-router-dom used for navigating between pages." }, // routing
+    { title: "Forms", description: "FeedbackBox has a controlled form input." }, // form programming
+    { title: "Pagination", description: "Tips.js uses MUI Pagination for showing tips." } // pagination
   ];
 
   // References list
@@ -46,11 +46,11 @@ function Home() {
       <section className="hero-profile-section">
         {/* Left Card */}
         <div className="info-card">
-          <img src={heroImage} alt="Cartoon safety hero" className="card-image" />
+          <img src={heroImage} alt="Cartoon safety hero" className="card-image" /> {/* layout concept */}
           <h2 className="card-title">Become a Safety Hero!</h2>
           <p className="card-text">Learn all about staying safe in this fun adventure game.</p>
-          <Link to="/game">
-            <button className="card-button">Start the Game</button>
+          <Link to="/game"> {/* routing used here */}
+            <button className="card-button">Start the Game</button> {/* event handling */}
           </Link>
         </div>
 
@@ -60,7 +60,7 @@ function Home() {
             src={profileImage}
             alt="Manvitha Dungi"
             className="card-image"
-            onError={(e) => {
+            onError={(e) => { // event management
               e.target.src = 'https://placehold.co/150x150/F0E6FF/5D6073?text=You';
             }}
           />
@@ -93,7 +93,7 @@ function Home() {
         <h2 className="section-heading">React Concepts Used</h2>
         <div className="concepts-container">
           {reactConcepts.map((concept, index) => (
-            <div key={index} className="concept-card">
+            <div key={index} className="concept-card"> {/* Lists & Keys used here */}
               <div className="concept-title">{concept.title}</div>
               <div className="concept-description">{concept.description}</div>
             </div>
@@ -108,7 +108,7 @@ function Home() {
           <div className="reference-card">
             <h3>Articles</h3>
             <ul>
-              {references.articles.map((ref, index) => (
+              {references.articles.map((ref, index) => ( // Lists & Keys
                 <li key={index}>
                   <a href={ref.url} target="_blank" rel="noopener noreferrer">{ref.title}</a>
                 </li>
@@ -118,7 +118,7 @@ function Home() {
           <div className="reference-card">
             <h3>Videos</h3>
             <ul>
-              {references.videos.map((ref, index) => (
+              {references.videos.map((ref, index) => ( // Lists & Keys
                 <li key={index}>
                   <a href={ref.url} target="_blank" rel="noopener noreferrer">{ref.title}</a>
                 </li>
